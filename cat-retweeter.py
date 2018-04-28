@@ -1,6 +1,5 @@
 import tweepy
 from credentials import *
-from time import sleep
 from datetime import date, timedelta
 import wget
 
