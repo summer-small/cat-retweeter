@@ -10,11 +10,13 @@ api = tweepy.API(auth)
 yesterday = date.today() - timedelta(1)
 print(str(yesterday) + '\n')
 
-tweets = tweepy.Cursor(api.search,
-                        q='#cats #catsoftwitter',
-                        count='200',
-                        since=str(yesterday),
-                        lang='en').items()
+tweets = tweepy.Cursor(
+    api.search,
+    q='#cats #catsoftwitter',
+    count='200',
+    since=str(yesterday),
+    lang='en'
+).items()
 
 for tweet in tweets:
     media = tweet.entities.get('media', [])
