@@ -5,7 +5,6 @@ name = "pypi"
 
 [packages]
 tweepy = "*"
-wget = "*"
 datetime = "*"
 
 [dev-packages]
