@@ -1,9 +1,9 @@
 import tweepy
-from credentials import *
+from os import environ
 from datetime import date, timedelta
 
-auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
-auth.set_access_token(access_token, access_token_secret)
+auth = tweepy.OAuthHandler(environ['consumer_key'], environ['consumer_secret'])
+auth.set_access_token(environ['access_token'], environ['access_token_secret'])
 api = tweepy.API(auth)
 
 yesterday = date.today() - timedelta(1)
