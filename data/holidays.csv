@@ -1,3 +1,12 @@
-Event,Hashtag,Date
+event,hashtag,date
 Christmas,#Christmas,25/12
 Halloween,#Halloween,31/10
+New Year,#Newyear,1/1
+New Year's Eve,#NewYearsEve,31/12
+Valentine's Day,#ValentinesDay,14/2
+St Patrick's Day,#StPatricksDay,17/3
+St Andrews Day,#StAndrewsDay,30/11
+Leap Day,#LeapDay,29/2
+Summer Solstice,#SummerSolstice,21/6
+Winter Solstice,#WinterSolstice,21/12
+Boxing Day,#BoxingDay,26/12
