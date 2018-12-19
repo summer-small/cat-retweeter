@@ -4,9 +4,9 @@ from datetime import datetime, date, timedelta
 import pandas as pd
 
 # Tweepy authorization for local testing
-#   Add keys and tokens to credentials.py (already in gitignore)
-#   Uncomment lines below and comment out standard auth lines to use
-#   Alternatively, set keys and tokens as environment variables
+# Add keys and tokens to credentials.py (already in gitignore)
+# Uncomment lines below and comment out standard auth lines to use
+# Alternatively, set keys and tokens as environment variables
 #from credentials import *
 #auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
 #auth.set_access_token(access_token, access_token_secret)
@@ -50,12 +50,11 @@ tweets = tweepy.Cursor(
 for tweet in tweets:
     media = tweet.entities.get('media', [])
     if len(media) > 0:
-        print("@{}:".format(tweet.user.screen_name))
+        print("@{}".format(tweet.user.screen_name))
+        print(tweet.created_at)
+        print(tweet.text)
         try:
-            print(tweet.text)
-            print()
             api.retweet(tweet.id)
             break
         except tweepy.TweepError as e:
-            print(e.reason)
-            print()
+            print(e.reason, "\n")
