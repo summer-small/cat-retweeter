@@ -21,7 +21,7 @@ today = date.today()
 print("Today:", str(today))
 
 # Default query
-query = '#cats #catsoftwitter'
+query = "#cats #catsoftwitter"
 
 # Check for holidays
 holidays = pd.read_csv('data/holidays.csv', dtype='str')
@@ -33,28 +33,37 @@ if not holiday.empty:
     query =  query + ' ' + holiday['hashtag'].values[0]
     print("Holiday:", holiday['event'].values[0])
 
-print("Query:", query, "\n")
+print("Query:", query)
 
-# Get tweets posted today for query
-# Get 200 just to be safe
-tweets = tweepy.Cursor(
-    api.search,
-    q=query,
-    count='200',
-    since=str(today),
-    lang='en'
-).items()
+# Loop until cat media tweet found
+cat_found = False
+while not cat_found:
 
-# Retweet first tweet with attached media
-# that has not already been retweeted
-for tweet in tweets:
-    media = tweet.entities.get('media', [])
-    if len(media) > 0:
-        print("@{}".format(tweet.user.screen_name))
-        print(tweet.created_at)
-        print(tweet.text)
-        try:
-            api.retweet(tweet.id)
-            break
-        except tweepy.TweepError as e:
-            print(e.reason, "\n")
+    # Get tweets posted today for query
+    # Get 200 just to be safe
+    tweets = tweepy.Cursor(
+        api.search,
+        q=query,
+        count='200',
+        since=str(today),
+        lang='en'
+    ).items()
+
+    # Retweet first tweet with attached media
+    # that has not already been retweeted
+    for tweet in tweets:
+        media = tweet.entities.get('media', [])
+        if len(media) > 0:
+            print("@{}".format(tweet.user.screen_name))
+            print(tweet.created_at)
+            print(tweet.text)
+            try:
+                api.retweet(tweet.id)
+                cat_found = True
+                break
+            except tweepy.TweepError as e:
+                print(e.reason, "\n")
+    
+    # If there are no holiday cat media tweets, rerun with default query
+    query = "#cats #catsoftwitter"
+    print("New query:", query)
