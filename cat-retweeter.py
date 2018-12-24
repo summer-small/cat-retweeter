@@ -64,6 +64,7 @@ while not cat_found:
             except tweepy.TweepError as e:
                 print(e.reason, "\n")
     
-    # If there are no holiday cat media tweets, rerun with default query
-    query = "#cats #catsoftwitter"
-    print("New query:", query)
+    # If there are no holiday cat media tweets, change to default query
+    if not cat_found:
+        query = "#cats #catsoftwitter"
+        print("New query:", query)
