@@ -1,17 +1,17 @@
 event,hashtag,date
 Christmas,#Christmas,25/12
 Halloween,#Halloween,31/10
-New Year,#Newyear,1/1
+New Year,#Newyear,01/01
 New Year's Eve,#NewYearsEve,31/12
 Valentine's Day,#ValentinesDay,14/2
 St Patrick's Day,#StPatricksDay,17/3
 St Andrews Day,#StAndrewsDay,30/11
-Leap Day,#LeapDay,29/2
-Summer Solstice,#SummerSolstice,21/6
+Leap Day,#LeapDay,29/02
+Summer Solstice,#SummerSolstice,21/06
 Winter Solstice,#WinterSolstice,21/12
 Boxing Day,#BoxingDay,26/12
 National Cat Day,#NationalCatDay,29/10
-International Women's Day,#InternationalWomensDay,8/3
-Independance Day,#IndependanceDay,4/7
-Star Wars Day,#StarWarsDay,4/5
-Pi Day,#PiDay,14/3
+International Women's Day,#InternationalWomensDay,08/03
+Independance Day,#IndependanceDay,04/07
+Star Wars Day,#StarWarsDay,04/05
+Pi Day,#PiDay,14/03

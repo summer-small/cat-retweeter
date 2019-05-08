@@ -1,20 +1,19 @@
 import tweepy
 from os import environ
 from datetime import datetime, date, timedelta
-import pandas as pd
+
+# Setup tweepy authorization
+auth = tweepy.OAuthHandler(environ['consumer_key'], environ['consumer_secret'])
+auth.set_access_token(environ['access_token'], environ['access_token_secret'])
+api = tweepy.API(auth)
 
 # Tweepy authorization for local testing
 # Add keys and tokens to credentials.py (already in gitignore)
 # Uncomment lines below and comment out standard auth lines to use
 # Alternatively, set keys and tokens as environment variables
-from credentials import *
-auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
-auth.set_access_token(access_token, access_token_secret)
-
-# Setup tweepy authorization
-#auth = tweepy.OAuthHandler(environ['consumer_key'], environ['consumer_secret'])
-#auth.set_access_token(environ['access_token'], environ['access_token_secret'])
-api = tweepy.API(auth)
+#from credentials import *
+#auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+#auth.set_access_token(access_token, access_token_secret)
 
 # Get date
 today = date.today()
@@ -23,15 +22,30 @@ print("Today:", str(today))
 # Default query
 query = "#cats #catsoftwitter"
 
-# Check for holidays
-holidays = pd.read_csv('data/holidays.csv', dtype='str')
-today_str = datetime.strftime(today, '%d/%m')
-holiday = holidays[holidays['date'] == today_str]
+# Get holiday data
+holidays = []
+with open('data/holidays.csv', 'r') as file:
+    line = file.readline()
+    line = file.readline()
+    while (line):
+        holidays.append(line.rstrip().split(','))
+        line = file.readline()
 
-# Append holiday hashtag to query if today is a holiday
-if not holiday.empty:
-    query =  query + ' ' + holiday['hashtag'].values[0]
-    print("Holiday:", holiday['event'].values[0])
+# Get todays date as a string of the same format as the holidays csv
+today_str = datetime.strftime(today, '%d/%m')
+print(today_str)
+
+# Check if any holidays are today
+holiday = None
+for day in holidays:
+    if day[2] == today_str:
+        holiday = day
+        break
+
+# If today is a holiday add that hashatag to the query
+if (holiday):
+    query += ' {}'.format(holiday[1])
+    print("Holiday: {}".format(holiday[0]))
 
 # Add filters:
 # - Must have media
@@ -41,7 +55,8 @@ query += " filter:media -filter:retweets"
 print("Query:", query)
 print("-"*48)
 
-# Loop until cat media tweet found
+# Loop until appropriate tweet found
+# This loop is unlikely to go more than once, but just in case
 cat_found = False
 while not cat_found:
 
@@ -55,15 +70,15 @@ while not cat_found:
         lang='en'
     ).items()
 
-    # Retweet first tweet with attached media
-    # that has not already been retweeted
+    # Retweet first tweet that has not already been retweeted
     for tweet in tweets:
         print("@{}".format(tweet.user.screen_name))
         print(tweet.created_at)
         print(tweet.text)
         print("-"*48)
         try:
-            #api.retweet(tweet.id)
+            # Retweet
+            api.retweet(tweet.id)
             cat_found = True
             break
         except tweepy.TweepError as e:

@@ -6,7 +6,6 @@ name = "pypi"
 [packages]
 tweepy = "*"
 datetime = "*"
-pandas = "*"
 
 [dev-packages]
 
